@@ -1,0 +1,54 @@
+$colors: (
+    dark: #11053b,
+    light: #fff,
+    primary: #ffbb00,
+    secondary: #2be3a9,
+);
+
+@function values($color) {
+    @return #{red(map-get($colors,$color))},
+    #{green(map-get($colors,$color))},
+    #{blue(map-get($colors,$color))}
+}
+
+:root {
+
+    --dark-rgb: #{values('dark')};
+    --light-rgb: #{values('light')};
+    --dark: rgba(var(--dark-rgb), 1);
+    --light: rgba(var(--light-rgb), 1);
+
+    --background: var(--dark);
+    --background-rgb: var(--dark-rgb);
+    --foreground: var(--light);
+    --foreground-rgb: var(--light-rgb);
+
+    --space: 1em;
+    --border-radius: .25em;
+
+    --primary-rgb: #{values('primary')};
+    --primary: rgb(var(--primary-rgb));
+
+    --secondary-rgb: #{red(map-get($colors,'secondary'))},
+    #{green(map-get($colors,'secondary'))},
+    #{blue(map-get($colors,'secondary'))};
+    --secondary: rgb(var(--secondary-rgb));
+
+}
+
+body,
+html {
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--foreground);
+    background-color: var(--background);
+
+}
+
+/* ADD RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}

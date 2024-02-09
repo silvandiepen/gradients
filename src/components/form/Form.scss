@@ -1,0 +1,280 @@
+@mixin inputBase() {
+    color: currentColor;
+
+    &__control {
+
+        padding: .75em 1em;
+        background-color: transparent;
+        border: none;
+        font-size: 1em;
+        line-height: 1;
+        width: 100%;
+        color: currentColor;
+        position: relative;
+        z-index: 2;
+
+        &:focus {
+            outline: none;
+        }
+
+        &::placeholder {
+            opacity: .5;
+        }
+    }
+
+    &__control-container {
+
+        position: relative;
+        // width: fit-content;
+        width: 100%;
+
+        &::before {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 1;
+            border: 2px solid rgba(var(--foreground-rgb), .25);
+            border-radius: var(--input-border-radius, var(--border-radius));
+
+            content: "";
+            width: 100%;
+            height: 100%;
+        }
+
+        &:has(:focus) {
+            &::before {
+                opacity: 1;
+                border: 2px solid rgba(var(--primary-rgb), .5);
+            }
+        }
+
+    }
+
+    &__label {
+        font-size: .875em;
+        padding: .75em 0;
+        display: block;
+        font-weight: 500;
+    }
+}
+
+@mixin inputTextarea {
+    &__control {
+        font-size: 1em;
+        font-family: inherit;
+
+        padding: .75em 1em;
+        min-height: 5em;
+    }
+}
+
+@mixin inputRange {
+    &__control-container {
+        display: flex;
+        align-items: center;
+        gap: 1em;
+    }
+
+    &__control {
+
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        cursor: pointer;
+        outline: none;
+        overflow: hidden;
+        border-radius: var(--input-range-track-height, var(--input-range-height));
+
+        --input-range-height: 1.5em;
+        --input-range-track-background-color: rgba(var(--primary-rgb, 0.5));
+        --input-range-thumb-background-color: rgba(var(--primary-rgb, 0.5));
+        --input-range-progress-background-color: var(--foreground);
+
+        &::-webkit-slider-runnable-track {
+            height: var(--input-range-track-height, var(--input-range-height));
+            background: var(--input-range-track, var(--input-range-track-background-color));
+            border-radius: var(--input-range-track-radius, var(--input-range-height));
+        }
+
+        &::-moz-range-track {
+            height: var(--input-range-track-height, var(--input-range-height));
+            background: var(--input-range-track, var(--input-range-track-background-color));
+            border-radius: var(--input-range-track-radius, var(--input-range-height));
+        }
+
+        &::-webkit-slider-thumb {
+            /* removing default appearance */
+            -webkit-appearance: none;
+            appearance: none;
+            height: var(--input-range-track-height, var(--input-range-height));
+            width: var(--input-range-track-height, var(--input-range-height));
+            background-color: var(--input-range-thumb, var(--input-range-thumb-background-color));
+            border-radius: 50%;
+            border: 2px solid var(--input-range-progress, var(--input-range-progress-background-color));
+            box-shadow: calc(-200px - (var(--input-range-track-height, var(--input-range-height)) / 2)) 0 0 200px var(--input-range-progress, var(--input-range-progress-background-color));
+        }
+
+        &::-moz-range-thumb {
+            height: 15px;
+            width: 15px;
+            background-color: var(--input-range-thumb, var(--input-range-thumb-background-color));
+            border-radius: 50%;
+            border: 2px solid var(--input-range-progress, var(--input-range-progress-background-color));
+            box-shadow: calc(-200px - (var(--input-range-track-height, var(--input-range-height)) / 2)) 0 0 200px var(--input-range-progress, var(--input-range-progress-background-color));
+        }
+
+    }
+}
+
+@mixin inputCheckbox() {
+    display: flex;
+    flex-direction: column-reverse;
+
+    &__control-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1em;
+
+        &:has(:checked) {
+            &~.input-checkbox__label::before {
+                background-position: calc((var(--input-checkbox-height) * 0.5) + var(--input-checkbox-space)) var(--input-checkbox-space);
+
+            }
+        }
+
+    }
+
+    &__control {
+        opacity: 0;
+        position: absolute;
+        appearance: none;
+        -webkit-appearance: none;
+
+    }
+
+    &__label {
+        display: flex;
+        gap: .5em;
+
+        &::before {
+            --input-checkbox-height: 1.5em;
+            --input-checkbox-space: 3px;
+            display: block;
+            content: "";
+            width: calc(var(--input-checkbox-height) * 1.5);
+            height: var(--input-checkbox-height);
+            border-radius: var(--input-border-radius, var(--border-radius));
+            position: relative;
+            cursor: pointer;
+            transition: all .3s ease;
+            background-image: radial-gradient(closest-side, var(--input-checkbox-dot, var(--foreground)) 100%, transparent);
+            background-color: rgba(var(--primary-rgb), .5);
+            background-repeat: no-repeat, no-repeat;
+            background-size: calc(var(--input-checkbox-height) - (var(--input-checkbox-space) * 2)) calc(var(--input-checkbox-height) - (var(--input-checkbox-space) * 2));
+            background-position: var(--input-checkbox-space) var(--input-checkbox-space);
+        }
+
+    }
+
+}
+
+@mixin inputColor() {
+    @include inputBase();
+
+    &__control-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    &__control {
+        &--color {
+            padding: 0;
+            aspect-ratio: 1/1;
+            width: 2em;
+            height: 2em;
+            border-radius: 50%;
+
+
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+
+            &::-webkit-color-swatch-wrapper {
+                padding: 0;
+            }
+
+            &::-webkit-color-swatch {
+                border: 0;
+                border-radius: 50%;
+            }
+
+            &::-moz-color-swatch,
+            &::-moz-focus-inner {
+                border: 0;
+            }
+
+            &::-moz-focus-inner {
+                padding: 0;
+            }
+        }
+    }
+}
+
+@mixin inputGroup() {
+
+    @include inputBase();
+
+    &__container {
+
+        display: flex;
+        gap: var(--space);
+        justify-content: space-between;
+    }
+
+    div [class*="__label"] {
+        padding: 0;
+        opacity: .5;
+    }
+
+}
+
+
+.input-group {
+    @include inputGroup();
+}
+
+.input-date {
+    @include inputBase();
+}
+
+.input-text {
+    @include inputBase();
+}
+
+.input-textarea {
+    @include inputBase();
+    @include inputTextarea();
+}
+
+.input-number {
+    @include inputBase();
+}
+
+.input-select {
+    @include inputBase();
+}
+
+.input-range {
+
+    @include inputRange();
+}
+
+.input-checkbox {
+    @include inputCheckbox();
+}
+
+.input-color {
+    @include inputColor();
+}
