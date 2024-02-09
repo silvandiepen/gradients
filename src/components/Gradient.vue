@@ -23,11 +23,12 @@ const gradientClasses = computed(() => {
 <style lang="scss">
 .gradient {
     width: 100%;
-    height: 100%;
-    padding: 2em;
     &__gradient{
+        border-radius: var(--space);
         width: 100%;
-        height: 100%;
+        height: 80vh;
+        position: sticky;
+        top: 0; 
     }
 
 }

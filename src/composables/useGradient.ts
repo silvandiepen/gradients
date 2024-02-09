@@ -73,7 +73,8 @@ export const useGradient = () => {
 
             const stopFormat = (color: string, position: number, unit: StopsUnit) => {
                 if (unit === StopsUnit.PERCENT) {
-                    return `${color} ${position * 100}%`;
+                    const percentage = (Math.round(position * 10000) / 100);
+                    return `${color} ${percentage}%`;
                 }
                 return `${color} ${position}${unit}`;
 

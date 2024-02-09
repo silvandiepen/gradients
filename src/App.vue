@@ -16,14 +16,16 @@ const bemm = useBemm('app');
 <style lang="scss">
 .app {
   display: flex;
-  height: 100vh; 
+ min-height: 100vh;
   &__settings {
-    padding: 1em;
+    padding: var(--space)
     // position: absolute;
   }
 
   &__gradient {
     // border: 2px solid red;
+    padding: 1em;
+    position: relative;
   }
 }
 </style>
