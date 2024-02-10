@@ -5,7 +5,7 @@
         </label>
 
         <div :class="bemm('control-container')">
-            <span :class="bemm('value')">{{ value }}</span>
+            <input style="width: 60px" type="number" :class="bemm('value')" v-model="value" />
             <input :class="bemm('control')" :placeholder="placeholder" type="range" v-model="value" :min="min" :max="max"
                 :step="step" />
         </div>

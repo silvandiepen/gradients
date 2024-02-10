@@ -18,7 +18,9 @@ const bemm = useBemm('app');
   display: flex;
  min-height: 100vh;
   &__settings {
-    padding: var(--space)
+    padding: var(--space);
+    width: 320px;
+    flex-shrink: 0;
     // position: absolute;
   }
 

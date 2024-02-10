@@ -47,8 +47,17 @@ export const FromUnit = {
     RAD: 'rad',
     DEG: 'deg',
     TURN: 'turn',
+    GRAD: 'grad',
 } as const;
 export type FromUnit = typeof FromUnit[keyof typeof FromUnit];
+
+export const AngleUnit = {
+    RAD: 'rad',
+    DEG: 'deg',
+    TURN: 'turn',
+    GRAD: 'grad',
+} as const;
+export type AngleUnit = typeof AngleUnit[keyof typeof AngleUnit];
 
 export const StopsUnit = {
     PX: 'px',

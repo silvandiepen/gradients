@@ -1,14 +1,16 @@
 import { reactive, computed } from "vue";
-import { GradientType, GradientStop, LinearGradientDirection, RadialGradientShape, PositionUnit, FromUnit, StopsUnit } from "@/types";
+import { GradientType, GradientStop, LinearGradientDirection, RadialGradientShape, PositionUnit, FromUnit, StopsUnit, AngleUnit } from "@/types";
 
 
 const gradientState = reactive<{
     type: GradientType
     angle: number;
+    angleUnit: AngleUnit,
     stops: GradientStop[];
     stopsUnit: StopsUnit,
     linearDirection: LinearGradientDirection,
     radialShape: RadialGradientShape,
+    linearUse: 'angle' | 'direction',
     position: {
         x: number,
         y: number
@@ -20,12 +22,14 @@ const gradientState = reactive<{
 }>({
     type: 'linear',
     angle: 0,
+    angleUnit: AngleUnit.DEG,
     stops: [
         { color: '#ff0000', position: 0 },
         { color: '#00ff00', position: 0.5 },
         { color: '#0000ff', position: 1 },
     ],
     stopsUnit: StopsUnit.PERCENT,
+    linearUse: 'direction',
     linearDirection: LinearGradientDirection.TO_BOTTOM,
     radialShape: RadialGradientShape.CIRCLE,
     position: {
@@ -53,6 +57,13 @@ export const useGradient = () => {
                 return gradientState.angle;
             }, set(value: number) {
                 gradientState.angle = value;
+            }
+        }),
+        angleUnit: computed({
+            get() {
+                return gradientState.angleUnit;
+            }, set(value: AngleUnit) {
+                gradientState.angleUnit = value;
             }
         }),
         stops: computed({
@@ -97,7 +108,7 @@ export const useGradient = () => {
                 }
 
 
-                return `${gradientState.type}-gradient(${pre}, ${stops})`;
+                return `radial-gradient(${pre}, ${stops})`;
             }
             if (gradientState.type === 'conic') {
 
@@ -126,10 +137,13 @@ export const useGradient = () => {
 
 
 
-                return `${gradientState.type}-gradient(${pre ? pre + ',' : ''}${stops})`;
+                return `conic-gradient(${pre ? pre + ',' : ''}${stops})`;
             }
             if (gradientState.type === 'linear') {
-                return `${gradientState.type}-gradient(${gradientState.linearDirection}, ${stops})`;
+
+                const direction = gradientState.linearUse === 'angle' ? `${gradientState.angle}${gradientState.angleUnit}` : gradientState.linearDirection;
+
+                return `linear-gradient(${direction}, ${stops})`;
             }
 
             return ``;
@@ -176,5 +190,12 @@ export const useGradient = () => {
                 gradientState.fromUnit = value;
             }
         }),
+        linearUse: computed({
+            get() {
+                return gradientState.linearUse;
+            }, set(value: 'angle' | 'direction') {
+                gradientState.linearUse = value;
+            }
+        })
     };
 }

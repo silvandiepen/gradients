@@ -13,7 +13,7 @@
 
 import { useBemm } from 'bemm';
 
-const bemm = useBemm('input-group');
+const bemm = useBemm('form-field');
 
 defineProps({
     label: {
